@@ -1,0 +1,26 @@
+//Problem : Ransom note
+//Approach : 1. Use 2 pointers; if characters are equal, increment both pointers else increment 1.
+                If the order is to be maintained : TC - O(n) and SC - O(1)
+                If order in which characters apear need not be maintained : TC - O(nlogn) and SC - O(1)
+//Code : 
+class Solution {
+public:
+    bool canConstruct(string ransomNote, string magazine) {
+        int i=0, j=0;
+        sort(ransomNote.begin(),ransomNote.end());
+        sort(magazine.begin(), magazine.end());
+        while((i<ransomNote.length())&&(j<magazine.length()))
+        {
+            if(ransomNote[i]==magazine[j])
+            {
+                i++;
+                j++;
+            }
+            else
+                j++;
+        }
+        if(i==ransomNote.length())
+            return true;
+        return false;
+    }
+};
