@@ -1,0 +1,54 @@
+/*Problem : First non repeating char in a string
+Approaches and mistakes : 
+      1. Nested loop
+        TC : O(n^2) and SC: O(1)
+        Mistake made : Ran inner loop from i+1 instead of 0 -> produced error when char repeated more than twice
+      2. Hash map
+         TC : O(n log n) and SC: O(n)
+         Mistake : Did not check for char repeating multiple times; erase function; accessing first element of set
+      3. 2 pointer
+         TC : O(n) and SC : O(1)
+*/
+//Hash method : 
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        set<char>first_time;
+        set<char>repeat;
+        for(int i=0;i<s.length();i++)
+            if((first_time.find(s[i])==first_time.end())&&(repeat.find(s[i])==repeat.end()))
+                first_time.insert(s[i]);
+            else
+            {
+                first_time.erase(s[i]);
+                repeat.insert(s[i]);
+            }
+        for(int i=0;i<s.length();i++)
+            if(first_time.find(s[i])!=first_time.end())
+                return i;
+        return -1;
+    }
+};
+
+
+//Hash method 2: O(n)
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        map<char,int>counter;
+        for(int i=0;i<s.length();i++)
+            if(counter.find(s[i])==counter.end())
+                counter.insert(pair<char,int>(s[i],1));
+            else
+                counter[s[i]]+=1;
+        for(int i=0;i<s.length();i++)
+        {
+            auto it = counter.find(s[i]);
+            if(it->second==1)
+                return i;
+        }
+        return -1;
+    }
+};
+
+      
