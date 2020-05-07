@@ -1,0 +1,44 @@
+//Cousins in binary tree
+//Approach - DFS
+//Mistakes : Learnt DFS; parent and depth array size error; trees not my strong point
+//Code : TC O(n) and SC O(n)
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    void traverse(TreeNode * root, int parent[], int depth[])
+    {
+       if(root->left)
+       {
+           parent[root->left->val] = root->val;
+           depth[root->left->val] = depth[root->val]+1;
+           traverse(root->left, parent, depth);
+       }
+       if(root->right)
+       {
+           parent[root->right->val] = root->val;
+           depth[root->right->val] = depth[root->val]+1;
+           traverse(root->right, parent, depth);
+       }
+    }
+    bool isCousins(TreeNode* root, int x, int y) {
+       int parent[101], depth[101];
+       parent[1] = 0;
+       depth[1] = 1;
+       traverse(root, parent, depth);
+       if(parent[x]==parent[y])
+           return false;
+       else if(depth[x]==depth[y])
+           return true;
+       else return false;
+       }
+};
