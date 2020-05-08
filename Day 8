@@ -1,0 +1,27 @@
+//Problem : Check if it is a straight line
+//Approach : Find slope of adjacent 2 points and compare
+//Mistakes : Corner case where slope is infinite or line is paralell to x axis
+//TC O(n) and SC O(1)
+//Code
+class Solution {
+public:
+    bool checkStraightLine(vector<vector<int>>& coordinates) {
+        float x1, y1, x2, y2;
+        for(int i=1;i<coordinates.size()-1;i++)
+        {
+            x1 = (coordinates[i][0]-coordinates[i-1][0]);
+            y1 = (coordinates[i][1]-coordinates[i-1][1]);
+            x2 = (coordinates[i+1][0]-coordinates[i][0]);
+            y2 = (coordinates[i+1][1]-coordinates[i][1]);
+            if(y1&&y2)
+            {
+                if((x1/y1)!=(x2/y2))
+                    return false;
+            }
+            else if((coordinates[i][1]!=coordinates[i-1][1])||(coordinates[i][1]!=coordinates[i+1][1]))
+                return false;
+        }
+        return true;
+        
+    }
+};
