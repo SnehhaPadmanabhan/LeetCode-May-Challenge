@@ -1,0 +1,32 @@
+//Problem : Flood fill
+//Solution : DFS - recursion
+//Mistakes : Tried to use a single function in recursion; did not take into account to the fact that the flood can fill only to pixels that are in the same color as the starting point
+//TC and SC : O(n^2) 
+//Code
+class Solution {
+public:
+    void fill(vector<vector<int>>&image, int sr, int sc, int color, vector<vector<bool>>&visited, int reachable)
+    {
+        if(sr<0 || sc<0 || sr>=image.size() || sc>=image[0].size() || visited[sr][sc]==true)
+            return; 
+        if(image[sr][sc]==reachable) {
+        image[sr][sc]=color;
+        visited[sr][sc]=true;
+        fill(image, sr-1, sc, color, visited, reachable);
+        fill(image, sr+1, sc, color, visited, reachable);
+        fill(image, sr, sc-1, color, visited, reachable);
+        fill(image, sr, sc+1, color, visited, reachable);
+        }
+        return;
+    }
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
+        if(sr<0 || sc<0 || sr>=image.size() || sc>=image.size())
+            return image;
+        int nrows = image.size();
+        int ncols = image[0].size();
+        vector<vector<bool>>visited(nrows, vector<bool>(ncols,false));
+        int reachable = image[sr][sc];
+        fill(image, sr, sc, newColor, visited, reachable);
+        return image;
+    }
+};
